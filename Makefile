@@ -6,7 +6,7 @@
 #    By: gchatain <gchatain@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/07 17:26:19 by gchatain          #+#    #+#              #
-#    Updated: 2023/01/18 18:07:37 by gchatain         ###   ########lyon.fr    #
+#    Updated: 2023/01/20 19:12:51 by gchatain         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,9 @@ clean:
 	@echo "Cleaning docker containers..."
 	@docker-compose -f srcs/docker-compose.yml down --rmi all
 	@docker system prune --all --force
+	docker volume prune --force
+	@rm -rf srcs/wordpress/content
+	@rm -rf srcs/mariadb/content
 
 re : clean build start
 

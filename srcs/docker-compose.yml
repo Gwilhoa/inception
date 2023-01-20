@@ -2,9 +2,6 @@ version : '3.8'
 services :
   mariadb :
     container_name : mariadb
-    init : true
-    ports : 
-      - "3306:3306"
     build :
       context : ./mariadb
       dockerfile : Dockerfile
@@ -19,33 +16,33 @@ services :
     networks:
       - inception
   wordpress :
+    init: true
     container_name : wordpress
     depends_on : 
       - mariadb
-    init : true
-    build :
-      context : ./wordpress
-      dockerfile : Dockerfile
-      args :
+    environment :
         - MDB_ROOT_PASSWORD=${MDB_ROOT_PASSWORD}
         - MDB_DATABASE=${MDB_DATABASE}
         - MDB_USER=${MDB_USER}
         - MDB_PASSWORD=${MDB_PASSWORD}
+        - MDB_HOST=${MDB_HOST}
+    build :
+      context : ./wordpress
+      dockerfile : Dockerfile
     volumes :
       - ./wordpress/content:/var/www/html
     ports :
-      - "9000:9000"
+      - "3306:3306"
     restart : always
     networks:
       - inception
   nginx:
     container_name : nginx
-    init : true
     build :
       context : ./nginx
       dockerfile : Dockerfile
     volumes :
-      - ./nginx/content:/var/www/html
+      - ./wordpress/content:/var/www/html
     ports :
       - "443:443"
     restart : always
