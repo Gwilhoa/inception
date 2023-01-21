@@ -10,4 +10,5 @@ RUN service mysql start && mysql -u root -e "CREATE DATABASE ${MDB_DATABASE};" \
 && mysql -u root -e "CREATE USER '${MDB_USER}'@'localhost' IDENTIFIED BY '${MDB_PASSWORD}';" \ 
 && mysql -u root -e "GRANT ALL PRIVILEGES ON ${MDB_DATABASE}.* TO '${MDB_USER}'@'localhost';" \ 
 && mysql -u root -e "FLUSH PRIVILEGES;"
+COPY ./config/my.cnf /etc/mysql/my.cnf
 CMD ["mysqld", "--skip-grant-tables"]

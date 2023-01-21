@@ -2,6 +2,7 @@ version : '3.8'
 services :
   mariadb :
     container_name : mariadb
+
     build :
       context : ./mariadb
       dockerfile : Dockerfile
