@@ -1,8 +1,8 @@
-version : '3.8'
-services :
-  mariadb :
+version: '3.8'
+services:
+  mariadb:
+    init: true
     container_name : mariadb
-
     build :
       context : ./mariadb
       dockerfile : Dockerfile
@@ -12,11 +12,11 @@ services :
         - MDB_USER=${MDB_USER}
         - MDB_PASSWORD=${MDB_PASSWORD}
     volumes :
-      - ./mariadb/content:/var/lib/mysql
+      - mariadb:/var/lib/mysql
     restart : always
     networks:
       - inception
-  wordpress :
+  wordpress:
     init: true
     container_name : wordpress
     depends_on : 
@@ -31,13 +31,12 @@ services :
       context : ./wordpress
       dockerfile : Dockerfile
     volumes :
-      - ./wordpress/content:/var/www/html
-    ports :
-      - "3306:3306"
+      - wordpress:/var/www/html
     restart : always
     networks:
       - inception
   nginx:
+    init: true
     container_name : nginx
     build :
       context : ./nginx
@@ -49,6 +48,19 @@ services :
     restart : always
     networks:
       - inception
+volumes:
+  mariadb:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/gchatain42/data/mariadb
+      o: bind
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/gchatain42/data/wordpress
+      o: bind
 networks:
   inception:
     driver: bridge

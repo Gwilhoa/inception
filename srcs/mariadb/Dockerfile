@@ -1,6 +1,7 @@
 FROM debian:buster as builder
 RUN apt-get update && apt-get upgrade -y
-RUN apt install mariadb-server -y
+RUN apt install mariadb-server mariadb-client -y
+# RUN chmod 777 /var/lib/mysql
 ARG MDB_USER=${MDB_USER}
 ARG MDB_ROOT_PASSWORD=${MDB_ROOT_PASSWORD}
 ARG MDB_PASSWORD=${MDB_PASSWORD}
@@ -11,4 +12,6 @@ RUN service mysql start && mysql -u root -e "CREATE DATABASE ${MDB_DATABASE};" \
 && mysql -u root -e "GRANT ALL PRIVILEGES ON ${MDB_DATABASE}.* TO '${MDB_USER}'@'localhost';" \ 
 && mysql -u root -e "FLUSH PRIVILEGES;"
 COPY ./config/my.cnf /etc/mysql/my.cnf
-CMD ["mysqld", "--skip-grant-tables"]
+EXPOSE 3306
+# CMD ["mysqld"]
+CMD ["sleep", "infinity"]

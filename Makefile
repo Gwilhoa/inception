@@ -12,7 +12,7 @@
 
 start:
 	@echo "Starting docker containers..."
-	@docker-compose --env-file srcs/.env -f srcs/docker-compose.yml up -d 
+	@docker-compose -f srcs/docker-compose.yml up -d 
 
 stop:
 	@echo "Stopping docker containers..."
@@ -31,8 +31,8 @@ clean:
 	@docker-compose -f srcs/docker-compose.yml down --rmi all
 	@docker system prune --all --force
 	@docker volume prune --force
-	@rm -rf srcs/wordpress/content
-	@rm -rf srcs/mariadb/content
+	# @rm -rf srcs/wordpress/content
+	# @rm -rf srcs/mariadb/content
 
 re : clean build start
 
