@@ -31,8 +31,7 @@ clean:
 	@docker-compose -f srcs/docker-compose.yml down --rmi all
 	@docker system prune --all --force
 	@docker volume prune --force
-	# @rm -rf srcs/wordpress/content
-	# @rm -rf srcs/mariadb/content
+	@sudo rm -rf ~/data/wordpress/* ~/data/mariadb/*
 
 re : clean build start
 

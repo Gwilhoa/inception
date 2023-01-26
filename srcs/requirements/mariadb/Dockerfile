@@ -8,10 +8,10 @@ ARG MDB_PASSWORD=${MDB_PASSWORD}
 ARG MDB_DATABASE=${MDB_DATABASE}
 ARG MDB_HOST=${MDB_HOST}
 RUN service mysql start && mysql -u root -e "CREATE DATABASE ${MDB_DATABASE};" \
-&& mysql -u root -e "CREATE USER '${MDB_USER}'@'localhost' IDENTIFIED BY '${MDB_PASSWORD}';" \ 
-&& mysql -u root -e "GRANT ALL PRIVILEGES ON ${MDB_DATABASE}.* TO '${MDB_USER}'@'localhost';" \ 
+&& mysql -u root -e "CREATE USER '${MDB_USER}'@'%' IDENTIFIED BY '${MDB_PASSWORD}';" \ 
+&& mysql -u root -e "GRANT ALL PRIVILEGES ON ${MDB_DATABASE}.* TO '${MDB_USER}'@'%';" \ 
 && mysql -u root -e "FLUSH PRIVILEGES;"
-COPY ./config/my.cnf /etc/mysql/my.cnf
+COPY ./config/my.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 EXPOSE 3306
-# CMD ["mysqld"]
-CMD ["sleep", "infinity"]
+CMD ["mysqld"]
+# CMD ["sleep", "infinity"]

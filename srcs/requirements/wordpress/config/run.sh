@@ -12,6 +12,6 @@
 
 #!/bin/bash 
 wp core download --allow-root --path=/var/www/html/wordpress
-wp config create --dbname=$MDB_DATABASE --dbuser=$MDB_USER --dbpass=$MDB_PASSWORD --dbhost=$MDB_HOST --allow-root --path=/var/www/html/wordpress --skip-check
-wp core install --url=gchatain.42.fr --title=inception --admin_user=root --admin_password=root --admin_email=gchatain@localhost --allow-root --path=/var/www/html/wordpress
-$@ 
+wp config create --dbcharset=utf8mb4 --dbname=$MDB_DATABASE --dbuser=$MDB_USER --dbpass=$MDB_PASSWORD --dbhost=$MDB_HOST --allow-root --path=/var/www/html/wordpress --skip-check
+wp core install --url=$WP_URL --title=$WP_TITLE --admin_user=$WP_ADMIN --admin_password=$WP_ADMIN_PASSWORD --admin_email=gchatain@student.42lyon.fr --allow-root --path=/var/www/html/wordpress
+php-fpm7.3 -F
